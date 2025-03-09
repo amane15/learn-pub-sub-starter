@@ -1,0 +1,15 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.0.7-management-alpine
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 61613:61613
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    command: >
+      sh -c "rabbitmq-plugins enable --offline rabbitmq_stomp && rabbitmq-server"
+
+volumes:
+  rabbitmq_data:
