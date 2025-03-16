@@ -7,7 +7,7 @@ services:
       - 15672:15672
       - 61613:61613
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq_data:/var/lib/rabbitmq
     command: >
       sh -c "rabbitmq-plugins enable --offline rabbitmq_stomp && rabbitmq-server"
 

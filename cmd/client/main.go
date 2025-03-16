@@ -30,13 +30,28 @@ func main() {
 		return
 	}
 
-	_, _, err = pubsub.DeclareAndBind(conn, routing.ExchangePerilDirect,
+	gameState := gamelogic.NewGameState(username)
+
+	gamelogic.PrintClientHelp()
+
+	for {
+		input := gamelogic.GetInput()
+		if len(input) == 0 {
+			continue
+		}
+
+		switch input[0] {
+		}
+	}
+
+	_, queue, err := pubsub.DeclareAndBind(conn, routing.ExchangePerilDirect,
 		fmt.Sprintf("pause.%s", username),
 		routing.PauseKey, 2)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("could not subscribe to pause: %v", err)
 		return
 	}
+	fmt.Printf("Queue %v declared and bound!\n", queue.Name)
 
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, os.Interrupt)
